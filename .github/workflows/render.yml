@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   render:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # Playwright 1.56 belum mendukung ubuntu 26.04 (ubuntu-latest sejak 19 Okt 2026)
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
