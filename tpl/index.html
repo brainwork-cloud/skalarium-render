@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Skalarium render</title>
+<link rel="stylesheet" href="/lib/style.css">
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<script src="/node_modules/topojson-client/dist/topojson-client.min.js"></script>
+</head><body><div id="wrap"><canvas id="gl"></canvas><div id="ov"></div></div>
+<script type="module">
+// ?tpl=<nama template di folder ini>&job=/jobs/<ID>
+const t = (new URLSearchParams(location.search).get('tpl') || '').replace(/[^a-z0-9-]/g, '');
+import(`./${t}.js`);
+</script>
+</body></html>
