@@ -1,0 +1,66 @@
+{
+ "template": "tebak-dulu",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #2 · CUMI RAKSASA",
+ "latar": "panggung",
+ "hook": [
+  "CUMI RAKSASA",
+  "*JARAK TENTAKEL*",
+  "BERAPA A?"
+ ],
+ "opsi": [
+  "14 KM",
+  "560 M",
+  "1 400 M"
+ ],
+ "benar": 0,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 14000.0,
+   "satuan": "meter",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "fakta",
+   "teks": "Setiap cumi memiliki dua tentakel, masing‑masing ~10 m"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "14000 ÷ 1000 = *14 km*",
+   "hasil": "14 km",
+   "sub": "KONVERSI"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "TENTAKEL",
+    "nilai": 14000.0,
+    "teks": "14 km",
+    "utama": true
+   },
+   {
+    "label": "MENARA PISA",
+    "nilai": 56.0,
+    "teks": "56 m"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "≈ 14 km"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakan",
+  "kata_follow": "follow"
+ }
+}
