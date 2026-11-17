@@ -1,0 +1,69 @@
+{
+ "template": "tebak-dulu",
+ "bahasa": "id",
+ "mood": "ceria",
+ "seri": "TEBAK DULU #1 · REKOR LARI",
+ "latar": "panggung",
+ "hook": [
+  "REKOR 100M VS 200M,",
+  "*MANA YANG PALING*",
+  "MENANTANG CEPAT?"
+ ],
+ "opsi": [
+  "100M LEBIH CEPAT",
+  "200M LEBIH CEPAT",
+  "KEDUANYA SAMA"
+ ],
+ "benar": 0,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 958.0,
+   "satuan": "DETIK WAKTU 100M",
+   "desimal": 2
+  },
+  {
+   "baris": "b4",
+   "jenis": "rumus",
+   "teks": "100 m ÷ 9,58 s = *10,44 m/s*",
+   "hasil": "10,44 m/s",
+   "sub": "KECEPATAN RATA-RATA 100M"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "200 m ÷ 19,19 s = *10,42 m/s*",
+   "hasil": "10,42 m/s",
+   "sub": "KECEPATAN RATA-RATA 200M"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "LARI 100M",
+    "nilai": 1044.0,
+    "teks": "10,44 m/s",
+    "utama": true
+   },
+   {
+    "label": "LARI 200M",
+    "nilai": 1042.0,
+    "teks": "10,42 m/s",
+    "utama": false
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "100m sedikit lebih unggul"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakan",
+  "kata_follow": "follow"
+ }
+}
