@@ -2,6 +2,7 @@
 //   node kerja/render.js <template> info    - <dir>  --job /jobs/<ID>   -> JSON durasi, adegan, cue, tanda waktu (stdout)
 //   node kerja/render.js <template> preview <t1,t2,...> <dir> --job ...   -> JPEG per waktu
 //   node kerja/render.js <template> segs    <all|i,j> <dir> --job ...     -> <dir>/seg_XX.mp4 per adegan
+//   node kerja/render.js <template> cover   <t|-> <dir> --job ...         -> <dir>/cover.jpg (tanpa subtitle)
 // Env: WORKERS = jumlah browser paralel (default 1), FORCE=1 = render ulang segmen yang sudah ada.
 // Server statis bawaan melayani akar repo, jadi tidak perlu proses server terpisah.
 const { chromium } = require('playwright');
@@ -68,6 +69,13 @@ async function renderSeg(page, meta, i) {
   } else if (mode === 'preview') {
     fs.mkdirSync(outDir, { recursive: true });
     for (const s of arg.split(',')) { const t = parseFloat(s); fs.writeFileSync(path.join(outDir, `t_${t.toFixed(2)}.jpg`), await shot(p0, t)); console.log('frame', t); }
+  } else if (mode === 'cover') {
+    // sampul tanpa subtitle: <dir>/cover.jpg pada detik <arg> ('-' = MARKS.cover dari template, bawaan 1,2)
+    fs.mkdirSync(outDir, { recursive: true });
+    await p0.addStyleTag({ content: '.subs { visibility: hidden !important; }' });
+    const t = arg && arg !== '-' ? parseFloat(arg) : (meta.marks && meta.marks.cover) || 1.2;
+    fs.writeFileSync(path.join(outDir, 'cover.jpg'), await shot(p0, t));
+    console.log('sampul', t);
   } else if (mode === 'segs') {
     fs.mkdirSync(outDir, { recursive: true });
     const idx = arg === 'all' ? meta.scenes.map((_, i) => i) : arg.split(',').map(Number);

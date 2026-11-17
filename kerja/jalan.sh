@@ -1,6 +1,6 @@
 #!/bin/bash
 # Dipanggil workflow render: render semua job yang belum punya rilis render-<ID> (atau hanya $ID bila diisi; boleh beberapa, pisahkan koma),
-# lalu unggah <ID>.mp4 sebagai aset rilis publik (diambil mesin-konten).
+# lalu unggah <ID>.mp4 (+ <ID>_cover.jpg) sebagai aset rilis publik (diambil mesin-konten).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 shopt -s nullglob
@@ -23,8 +23,13 @@ for jf in jobs/*/job.json; do
   sed "s#^#file '$PWD/#; s#\$#'#" "$out/segs.txt" > "$out/list.txt"
   ffmpeg -y -loglevel error -f concat -safe 0 -i "$out/list.txt" -c copy "$out/video.mp4"
   ffmpeg -y -loglevel error -i "$out/video.mp4" -i "$out/audio/mix.wav" -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart "$out/$id.mp4"
+  # sampul tanpa subtitle (frame hook) untuk unggahan; gagal sampul tidak menahan video
+  cover=()
+  if node kerja/render.js "$tpl" cover - "$out" --job "/$d" >/dev/null && [ -s "$out/cover.jpg" ]; then
+    cp "$out/cover.jpg" "$out/${id}_cover.jpg"; cover=("$out/${id}_cover.jpg")
+  fi
   dur=$(( $(date +%s) - start ))
   gh release delete "render-$id" -y --cleanup-tag >/dev/null 2>&1 || true
-  gh release create "render-$id" "$out/$id.mp4" "$out/info.json" --title "$id" --notes "Template $tpl, render ${dur} detik di runner Actions (WORKERS=${WORKERS:-1})."
+  gh release create "render-$id" "$out/$id.mp4" "$out/info.json" "${cover[@]}" --title "$id" --notes "Template $tpl, render ${dur} detik di runner Actions (WORKERS=${WORKERS:-1})."
   echo "selesai $id dalam ${dur} detik"
 done
