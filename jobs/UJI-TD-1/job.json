@@ -1,0 +1,18 @@
+{
+ "id": "UJI-TD-1", "template": "tebak-dulu", "mood": "misteri", "bahasa": "id",
+ "catatan": "Uji template generik TEBAK DULU (latar bumi, banding kotak), 17 Nov 2026",
+ "seri": "TEBAK DULU #1 · SEMUA MANUSIA", "latar": "bumi",
+ "bumi": {"lat": -6.2, "lon": 106.8, "sorot": "360", "label": "SEMUA MANUSIA MUAT DI SINI"},
+ "hook": ["SEMUA MANUSIA", "*BERDIRI RAPAT*", "SELUAS APA?"],
+ "opsi": ["SELUAS PULAU JAWA", "3× LUAS JAKARTA", "SELUAS KALIMANTAN"], "benar": 1,
+ "langkah": [
+  {"baris": "b3", "jenis": "hitung", "nilai": 8300000000, "satuan": "MANUSIA DI BUMI · 2026"},
+  {"baris": "b4", "jenis": "anggap", "teks": "1 m² = *4 ORANG*"},
+  {"baris": "b5", "jenis": "rumus", "teks": "8,3 miliar ÷ 4 = *2,075 miliar m²*", "hasil": "± 2.100 km²", "sub": "CUKUP UNTUK SEMUA MANUSIA"}
+ ],
+ "banding": {"baris": "b6", "jenis": "kotak", "item": [
+  {"label": "SEMUA MANUSIA", "nilai": 2075, "teks": "± 2.100 km²", "utama": true},
+  {"label": "JAKARTA", "nilai": 662, "teks": "662 km²", "ulang": 3}]},
+ "jawaban": {"baris": "b6", "kata": "Jawabannya", "sub": "≈ 3× luas Jakarta (662 km²)"},
+ "penutup": {"baris": "b7", "kata": "Tebakan", "kata_follow": "follow"}
+}
