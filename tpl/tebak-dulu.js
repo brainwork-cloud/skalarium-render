@@ -216,6 +216,28 @@ boot(async (info, D) => {
   const rumusS = steps.find(s => s.jenis === 'rumus');
 
   // ================================================================ SET C: perbandingan (z = 5000)
+  // Kamera dicari numerik supaya semua benda perbandingan muat di pita layar yang bebas teks: di bawah kartu
+  // jawaban (sampai ~y 690) dan di atas subtitle (mulai ~y 1290), menjauhi tombol TikTok di kanan.
+  // Dicocokkan pada keyframe terdekat (0,97) supaya tidak pernah meluber saat kamera mendekat.
+  const PITA_C = [100, 720, 960, 1265];
+  function fitCamC(pts, dirA, dirB, box) {
+    const cam = new THREE.PerspectiveCamera(40, W / H, 0.03, 4000);
+    const tgt = new THREE.Vector3(); pts.forEach(p => tgt.add(p)); tgt.multiplyScalar(1 / pts.length);
+    let d = 3 * pts.reduce((m, p) => Math.max(m, p.distanceTo(tgt)), 1);
+    const bw = box[2] - box[0], bh = box[3] - box[1], bx = (box[0] + box[2]) / 2, by = (box[1] + box[3]) / 2;
+    const up = new THREE.Vector3(), right = new THREE.Vector3();
+    for (let it = 0; it < 60; it++) {
+      cam.position.copy(tgt).addScaledVector(dirB, d * 0.97); cam.lookAt(tgt); cam.updateMatrixWorld();
+      let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      for (const p of pts) { const s = toScreen(cam, p); x0 = Math.min(x0, s.x); x1 = Math.max(x1, s.x); y0 = Math.min(y0, s.y); y1 = Math.max(y1, s.y); }
+      const wpp = (2 * d * 0.97 * Math.tan(THREE.MathUtils.degToRad(20))) / H;
+      up.set(0, 1, 0).applyQuaternion(cam.quaternion); right.set(1, 0, 0).applyQuaternion(cam.quaternion);
+      tgt.addScaledVector(right, ((x0 + x1) / 2 - bx) * wpp).addScaledVector(up, -((y0 + y1) / 2 - by) * wpp);
+      d *= Math.pow(Math.max((x1 - x0) / bw, (y1 - y0) / bh), 0.85);
+    }
+    const key = (dir, k) => ({ p: [tgt.x + dir.x * d * k, tgt.y + dir.y * d * k, tgt.z + dir.z * d * k], l: [tgt.x, tgt.y, tgt.z], fov: 40 });
+    return [key(dirA, 1.06), key(dirB, 0.97)];
+  }
   const OC = V(0, 0, 5000);
   const C = new THREE.Group(); C.position.copy(OC); scene.add(C);
   const items = [];
@@ -258,12 +280,11 @@ boot(async (info, D) => {
           items.push({ ...o, g, fill: f, top: V(0, 0.1, 0), size: s, k: k++ });
         });
       });
-      // jarak kamera: lebar muat 1/0,72 layar, kedalaman muat di area tengah (di bawah teks jawaban)
-      const tanH = Math.tan(THREE.MathUtils.degToRad(20)) * (W / H), tanV = Math.tan(THREE.MathUtils.degToRad(20));
-      const d = Math.max((totW / 0.72) / (2 * tanH), (totD / 0.5) / (2 * tanV));
-      const el2 = THREE.MathUtils.degToRad(66);
-      const zc0 = -totD * 0.12;
-      camC = [{ p: [0, d * Math.sin(el2) * 1.06, zc0 + d * Math.cos(el2) * 1.06], l: [0, 0, zc0], fov: 40 }, { p: [0, d * Math.sin(el2) * 0.97, zc0 + d * Math.cos(el2) * 0.97], l: [0, 0, zc0], fov: 40 }];
+      // kamera dari atas (66 derajat); label kotak ada di dalam kotak, jadi seluruh pita bebas teks dipakai
+      const el2 = THREE.MathUtils.degToRad(66), dir = V(0, Math.sin(el2), Math.cos(el2));
+      const pts = [];
+      items.forEach(o => { for (const sx of [-0.5, 0.5]) for (const sz of [-0.5, 0.5]) pts.push(V(o.g.position.x + sx * o.size, 0.1, o.g.position.z + sz * o.size)); });
+      camC = fitCamC(pts, dir, dir, PITA_C);
     } else {
       const sizes = list.map(o => (jenis === 'batang' ? 1.5 : Math.cbrt(o.v) * 2.2 * 2));
       const gap = jenis === 'batang' ? 0.9 : 0.7;
@@ -290,9 +311,14 @@ boot(async (info, D) => {
       sp.castShadow = true; sp.shadow.mapSize.set(1024, 1024); C.add(sp, sp.target);
       C.add(new THREE.HemisphereLight(0x7f9fd8, 0x0a0c12, 0.7));
       const rl = new THREE.DirectionalLight(0x5ad1ff, 1.8); rl.position.set(total, 6, -8); C.add(rl);
-      const tanH = Math.tan(THREE.MathUtils.degToRad(20)) * (W / H);
-      const d = Math.max(hmax / Math.tan(THREE.MathUtils.degToRad(11)), (total * 1.3) / (2 * tanH));
-      camC = [{ p: [-d * 0.07, hmax * 0.45 + d * 0.1, d * 1.04], l: [0, hmax * 0.82, 0], fov: 40 }, { p: [d * 0.06, hmax * 0.48 + d * 0.09, d * 0.97], l: [0, hmax * 0.82, 0], fov: 40 }];
+      // kamera hampir sejajar lantai, sedikit menyapu dari kiri ke kanan; label melayang di atas puncak,
+      // jadi batas atas pita dikurangi tinggi label (maks. 34 + 52 px + setengah tinggi label)
+      const pts = [];
+      items.forEach(o => {
+        const hx = o.size / 2, top = o.top.y - 0.15;
+        for (const sx of [-hx, hx]) for (const y of [0, top]) for (const sz of [-hx, hx]) pts.push(V(o.g.position.x + sx, y, sz));
+      });
+      camC = fitCamC(pts, V(-0.07, 0.06, 1).normalize(), V(0.06, 0.05, 1).normalize(), [PITA_C[0], PITA_C[1] + 110, PITA_C[2], PITA_C[3]]);
     }
   }
 
