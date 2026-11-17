@@ -13,6 +13,8 @@ for jf in jobs/*/job.json; do
   d=jobs/$id; out=out/$id; mkdir -p "$out"
   echo "== $id ($tpl, $mood)"
   start=$(date +%s)
+  # narasi dari mesin-konten dikirim sebagai MP3 (repo tetap kecil); align/mix butuh WAV
+  for m in "$d"/*.mp3; do w="${m%.mp3}.wav"; [ -f "$w" ] || ffmpeg -y -loglevel error -i "$m" -ac 1 "$w"; done
   python3 kerja/align.py "$d"
   node kerja/render.js "$tpl" info - "$out" --job "/$d" | tail -n 1 > "$out/info.json"
   node kerja/render.js "$tpl" segs all "$out" --job "/$d"
