@@ -1,0 +1,17 @@
+{
+ "id": "UJI-TD-2", "template": "tebak-dulu", "mood": "ceria", "bahasa": "id",
+ "catatan": "Uji template generik TEBAK DULU (latar panggung, banding batang), 17 Nov 2026",
+ "seri": "TEBAK DULU #2 · DETAK JANTUNG", "latar": "panggung",
+ "hook": ["SEUMUR HIDUP", "*JANTUNGMU BERDETAK*", "BERAPA KALI?"],
+ "opsi": ["300 JUTA KALI", "3 MILIAR KALI", "30 MILIAR KALI"], "benar": 1,
+ "langkah": [
+  {"baris": "b3", "jenis": "hitung", "nilai": 70, "satuan": "DETAK PER MENIT (SANTAI)"},
+  {"baris": "b4", "jenis": "rumus", "teks": "70 × 60 × 24 × 365 × 80 = *2,94 miliar*", "hasil": "± 3 MILIAR", "sub": "DETAK SEUMUR HIDUP"}
+ ],
+ "banding": {"baris": "b5", "jenis": "batang", "item": [
+  {"label": "A", "nilai": 0.3, "teks": "300 juta"},
+  {"label": "JAWABAN", "nilai": 2.94, "teks": "2,94 miliar", "utama": true},
+  {"label": "C", "nilai": 30, "teks": "30 miliar"}]},
+ "jawaban": {"baris": "b5", "kata": "Jawabannya", "sub": "70 detak/menit × 80 tahun"},
+ "penutup": {"baris": "b6", "kata": "Tebakan", "kata_follow": "Follow"}
+}
