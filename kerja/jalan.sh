@@ -1,12 +1,12 @@
 #!/bin/bash
-# Dipanggil workflow render: render semua job yang belum punya rilis render-<ID> (atau hanya $ID bila diisi),
+# Dipanggil workflow render: render semua job yang belum punya rilis render-<ID> (atau hanya $ID bila diisi; boleh beberapa, pisahkan koma),
 # lalu unggah <ID>.mp4 sebagai aset rilis publik (diambil mesin-konten).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 shopt -s nullglob
 for jf in jobs/*/job.json; do
   id=$(basename "$(dirname "$jf")")
-  if [ -n "${ID:-}" ]; then [ "$id" = "$ID" ] || continue
+  if [ -n "${ID:-}" ]; then case ",${ID// /}," in *",$id,"*) ;; *) continue ;; esac
   elif gh release view "render-$id" >/dev/null 2>&1; then echo "lewati $id (sudah dirender)"; continue; fi
   tpl=$(python3 -c "import json,sys;print(json.load(open(sys.argv[1]))['template'])" "$jf")
   mood=$(python3 -c "import json,sys;print(json.load(open(sys.argv[1])).get('mood','misteri'))" "$jf")
