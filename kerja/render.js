@@ -43,7 +43,7 @@ async function renderSeg(page, meta, i) {
   const f0 = Math.round(sc.a * 30), f1 = i === meta.scenes.length - 1 ? Math.round(meta.duration * 30) : Math.round(sc.b * 30);
   const fin = path.join(outDir, `seg_${String(i).padStart(2, '0')}.mp4`), tmp = fin.replace('.mp4', '.tmp.mp4');
   if (fs.existsSync(fin) && !process.env.FORCE) { console.log('lewati (sudah ada)', fin); return; }
-  const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', '30', '-c:v', 'mjpeg', '-i', '-', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '16', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-r', '30', tmp], { stdio: ['pipe', 'inherit', 'inherit'] });
+  const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', '30', '-c:v', 'mjpeg', '-i', '-', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-r', '30', tmp], { stdio: ['pipe', 'inherit', 'inherit'] });
   const done = new Promise(r => ff.on('close', r));
   const st = Date.now();
   for (let f = f0; f < f1; f++) {
