@@ -1,5 +1,6 @@
 # Perkiraan waktu per kata dari WAV narasi: batas frasa (tanda baca) ditempel ke jeda hening terdekat,
 # kata di dalam frasa dibagi proporsional panjang huruf. Masukan <dir>/info.json + <key>.wav, hasil <dir>/vo.json (info + "words").
+# Baris yang sudah membawa "words" (waktu kata asli dari mesin suara) tidak diperkirakan ulang.
 import json, re, sys, wave
 import numpy as np
 
@@ -27,6 +28,8 @@ def wlen(w): return len(re.sub(r'[^\w]', '', w)) + 1.2
 d = sys.argv[1]
 info = json.load(open(f'{d}/info.json'))
 for L in info:
+    if L.get('words'):  # waktu kata asli dari mesin suara (mis. Edge lewat mesin-konten) dipakai apa adanya
+        print(L['key'], 'waktu kata asli:', len(L['words']), 'kata'); continue
     x, sr = load(f"{d}/{L['key']}.wav"); dur = len(x) / sr
     words = L['teks'].split()
     # frasa
