@@ -1,6 +1,8 @@
 // Skalarium "TEBAK DULU" generik (17 Nov 2026): satu template 3D yang diisi job.json dari agen mesin-konten.
 // Alur: hook -> 3 opsi + hitung mundur -> langkah (hitung / anggap / rumus / fakta) -> perbandingan -> jawaban -> penutup.
 // Data job.json (semua teks dari agen; *kata* = sorot emas, baris hook yang seluruhnya *...* = blok kuning):
+//   Opsional: "subjek":"subjek.png" (gambar benda utama, PNG transparan di folder job: tampil di panggung, ladang hitung,
+//   dan di atas item utama) dan "ikon":"ikon_1.png" per item banding. Tanpa itu: tanda tanya emas + kubus.
 // { "template":"tebak-dulu", "bahasa":"id"|"en", "seri":"TEBAK DULU #2 · ...", "latar":"bumi"|"panggung",
 //   "bumi":{"lat":-6.2,"lon":106.8,"sorot":"360","label":"..."}, "hook":["...","*...*","..."],
 //   "opsi":["...","...","..."], "benar":1,
@@ -94,6 +96,20 @@ boot(async (info, D) => {
     g.computeBoundingBox(); const b = g.boundingBox; g.translate(-(b.max.x + b.min.x) / 2, -(b.max.y + b.min.y) / 2, -(b.max.z + b.min.z) / 2);
     return g;
   };
+  // Ikon benda yang dibahas (PNG transparan di folder job: "subjek" untuk benda utama, "ikon" per item banding).
+  // Ditampilkan sebagai papan yang selalu menghadap kamera; gagal dimuat = tampilan bawaan (tanda tanya / kubus).
+  const JOBDIR = (new URLSearchParams(location.search).get('job') || '.').replace(/\/$/, '');
+  const ikonTex = async f => {
+    if (!f || !/^[\w.-]+\.png$/i.test(String(f))) return null;
+    try { const t = await new THREE.TextureLoader().loadAsync(`${JOBDIR}/${f}`); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; } catch (e) { return null; }
+  };
+  const papan = (tex, size) => {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(size, size), new THREE.MeshBasicMaterial({ map: tex, transparent: true, alphaTest: 0.35, side: THREE.DoubleSide, fog: false }));
+    m.userData.papan = true; return m;
+  };
+  const papanList = [];
+  const subjekTex = await ikonTex(D.subjek);
+  const ikonItem = await Promise.all(((D.banding && D.banding.item) || []).map(it => ikonTex(it.ikon)));
   const stars = (group, n, r0, r1) => {
     const p = particles(S, n, { soft: 2.2 }); group.add(p.pts);
     for (let i = 0; i < n; i++) { const d = V(R() - 0.5, R() - 0.5, R() - 0.5).normalize().multiplyScalar(r0 + R() * (r1 - r0)); const b = 0.4 + R() * 0.6; p.set(i, d.x, d.y, d.z, 0.8 * b, 0.88 * b, 1.0 * b, 0.5 + R() * 0.5, 0.12 + R() * 0.22); }
@@ -162,8 +178,12 @@ boot(async (info, D) => {
     const ped = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.4, 0.32, 64), std(0x141826, 0.38, 0.7, { envMap: S.env, envMapIntensity: 0.5 }));
     ped.position.y = 0.16; ped.castShadow = ped.receiveShadow = true; A.add(ped);
     const rim = new THREE.Mesh(new THREE.TorusGeometry(1.27, 0.018, 8, 96), new THREE.MeshBasicMaterial({ color: hdr(0xf5c542, 3.2) })); rim.rotation.x = Math.PI / 2; rim.position.y = 0.33; A.add(rim);
-    qMark = new THREE.Mesh(glyph('?', 1.5, 0.42), std(0xf5c542, 0.22, 0.95, { envMap: S.env, envMapIntensity: 1.2, emissive: new THREE.Color(0x2a1c00) }));
-    qMark.position.y = 1.55; qMark.castShadow = true; A.add(qMark);
+    if (subjekTex) {
+      qMark = papan(subjekTex, 2.5); qMark.userData.ikon = true; papanList.push(qMark);
+      const glow = new THREE.Mesh(new THREE.CircleGeometry(1.15, 48), new THREE.MeshBasicMaterial({ color: hdr(0xf5c542, 1.2), transparent: true, opacity: 0.22, depthWrite: false }));
+      glow.rotation.x = -Math.PI / 2; glow.position.y = 0.335; A.add(glow);
+    } else qMark = new THREE.Mesh(glyph('?', 1.5, 0.42), std(0xf5c542, 0.22, 0.95, { envMap: S.env, envMapIntensity: 1.2, emissive: new THREE.Color(0x2a1c00) }));
+    qMark.position.y = subjekTex ? 1.75 : 1.55; qMark.castShadow = !subjekTex; A.add(qMark);
     const spot = new THREE.SpotLight(0xfff0d8, 22, 24, 0.36, 0.55, 1.6); spot.position.set(0, 9, 1.5); spot.target.position.set(0, 1.2, 0);
     spot.castShadow = true; spot.shadow.mapSize.set(1024, 1024); spot.shadow.bias = -0.0004; A.add(spot, spot.target);
     const rimL = new THREE.DirectionalLight(0x9fb4ff, 1.3); rimL.position.set(-5, 3, -4); A.add(rimL);
@@ -198,8 +218,22 @@ boot(async (info, D) => {
   cd.sort((a, b) => a.d - b.d);
   cd.forEach((c, k) => { c.k = k / NN; cubes.setColorAt(k, new THREE.Color(c.gold ? 0xf5c542 : R() < 0.5 ? 0x5ad1ff : 0xcfe6ff)); });
   cubes.castShadow = true; cubes.receiveShadow = true; Dg.add(cubes);
+  // dengan ikon benda: ladang benda (tiap 2 petak, lebih besar) menggantikan kubus
+  let ladang = null; const ld = [];
+  if (subjekTex) {
+    cubes.visible = false;
+    for (const c of cd) { const i = Math.round(c.x / SP + NC / 2 - 0.5), j = Math.round(c.z / SP + NC / 2 - 0.5); if (i % 2 === 0 && j % 2 === 0) ld.push(c); }
+    const g = new THREE.PlaneGeometry(1.05, 1.05); g.translate(0, 0.52, 0);
+    ladang = new THREE.InstancedMesh(g, new THREE.MeshBasicMaterial({ map: subjekTex, color: 0xc4c4c4, transparent: true, alphaTest: 0.35, side: THREE.DoubleSide }), ld.length);
+    ladang.frustumCulled = false; Dg.add(ladang);
+  }
   const unit = new THREE.Mesh(new RoundedBoxGeometry(1.0, 1.0, 1.0, 3, 0.1), std(0xf5c542, 0.3, 0.8, { envMap: S.env, envMapIntensity: 0.9, emissive: new THREE.Color(0x6a4a00) }));
   unit.castShadow = true; Dg.add(unit);
+  let unitI = null, blockI = null;
+  if (subjekTex) {
+    unitI = papan(subjekTex, 1.5); papanList.push(unitI); Dg.add(unitI);
+    blockI = papan(subjekTex, 4.6); papanList.push(blockI); Dg.add(blockI);
+  }
   const unitFrame = new THREE.Mesh(new THREE.RingGeometry(0.86, 0.92, 4, 1), new THREE.MeshBasicMaterial({ color: hdr(0xf5c542, 3.5), side: THREE.DoubleSide, transparent: true }));
   unitFrame.rotation.set(-Math.PI / 2, 0, Math.PI / 4); Dg.add(unitFrame);
   const block = new THREE.Mesh(new RoundedBoxGeometry(3.4, 3.4, 3.4, 4, 0.25), std(0xf5c542, 0.22, 0.85, { envMap: S.env, envMapIntensity: 1.1, emissive: new THREE.Color(0x4a3200) }));
@@ -250,7 +284,8 @@ boot(async (info, D) => {
     BD.item.forEach((it, idx) => {
       const col = it.utama ? COL.emas : COL[it.warna] ?? PALET[pi++ % PALET.length];
       const n = clamp(Math.round(it.ulang || 1), 1, 6);
-      for (let r = 0; r < n; r++) list.push({ it, idx, col, first: r === 0, v: Math.max(1e-9, +it.nilai || 0) / vmax });
+      const tex = ikonItem[idx] || (it.utama ? subjekTex : null);
+      for (let r = 0; r < n; r++) list.push({ it, idx, col, tex, first: r === 0, v: Math.max(1e-9, +it.nilai || 0) / vmax });
     });
     const floorTex = canvasTex(1024, 1024, (g, w, h) => {
       g.fillStyle = '#0d1418'; g.fillRect(0, 0, w, h);
@@ -277,7 +312,8 @@ boot(async (info, D) => {
           const f = new THREE.Mesh(new THREE.PlaneGeometry(s, s), new THREE.MeshBasicMaterial({ color: o.col, transparent: true, opacity: 0 })); f.rotation.x = -Math.PI / 2; f.position.y = 0.05; g.add(f);
           const em = new THREE.MeshBasicMaterial({ color: hdr(o.col, 3.6) }); const tt = Math.max(0.12, s * 0.014);
           for (const [w, d, px, pz] of [[s + tt, tt, 0, -s / 2], [s + tt, tt, 0, s / 2], [tt, s + tt, -s / 2, 0], [tt, s + tt, s / 2, 0]]) { const b = new THREE.Mesh(new THREE.PlaneGeometry(w, d), em); b.rotation.x = -Math.PI / 2; b.position.set(px, 0.08, pz); g.add(b); }
-          items.push({ ...o, g, fill: f, top: V(0, 0.1, 0), size: s, k: k++ });
+          if (o.tex) { const ic = papan(o.tex, s * 0.42); ic.position.set(0, s * 0.24, -s * 0.24); papanList.push(ic); g.add(ic); }
+          items.push({ ...o, g, fill: f, top: V(0, 0.1, o.tex ? s * 0.2 : 0), size: s, k: k++ });
         });
       });
       // kamera dari atas (66 derajat); label kotak ada di dalam kotak, jadi seluruh pita bebas teks dipakai
@@ -305,6 +341,10 @@ boot(async (info, D) => {
           const r = s / 2; mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 64, 40), mat); mesh.position.y = r; top = V(0, 2 * r + 0.15, 0); hmax = Math.max(hmax, 2 * r);
         }
         shadowAll(mesh, true, true); g.add(mesh);
+        if (o.tex) {
+          const is = jenis === 'batang' ? s * 1.25 : Math.max(s * 0.6, 0.9);
+          const ic = papan(o.tex, is); ic.position.set(0, top.y - 0.1 + is / 2, 0); papanList.push(ic); g.add(ic); top.y += is; hmax = Math.max(hmax, top.y);
+        }
         items.push({ ...o, g, mesh, top, size: s, k });
       });
       const sp = new THREE.SpotLight(0xfff0dc, 34, 60, 0.6, 0.6, 1.4); sp.position.set(-total * 0.4, hmax + 10, 10); sp.target.position.set(0, hmax / 3, 0);
@@ -410,6 +450,7 @@ boot(async (info, D) => {
     else if (set === 'D') c = camD(t);
     else c = camCAt(t);
     applyCam(camera, c);
+    for (const m of papanList) m.quaternion.copy(camera.quaternion);
     if (set === 'C') { camera.near = 0.5; camera.far = 4000; } else if (set === 'D') { camera.near = 0.05; camera.far = 600; } else { camera.near = 0.01; camera.far = 300; }
     camera.updateProjectionMatrix();
     let zb = 0, fl = 0;
@@ -432,7 +473,8 @@ boot(async (info, D) => {
         }
       }
       if (qMark) {
-        qMark.rotation.y = Math.sin(t * 0.7) * 0.55; qMark.position.y = 1.55 + Math.sin(t * 1.3) * 0.05;
+        if (qMark.userData.ikon) { qMark.position.y = 1.75 + Math.sin(t * 1.3) * 0.07; qMark.scale.setScalar(1 + Math.sin(t * 0.9) * 0.03); }
+        else { qMark.rotation.y = Math.sin(t * 0.7) * 0.55; qMark.position.y = 1.55 + Math.sin(t * 1.3) * 0.05; }
         cone.material.uniforms.o.value = 0.055 + Math.sin(t * 2.1) * 0.008;
         for (let i = 0; i < dust.n; i++) { const [a, h0, r0, k] = dust.seed[i]; const r = 0.4 + r0 * 0.35; const y = (h0 + t * (0.05 + k * 0.08)) % 6.5; dust.set(i, Math.cos(a + t * 0.05) * r, 0.3 + y, 0.7 + Math.sin(a + t * 0.05) * r * 0.6, 1, 0.92, 0.75, 0.25 + 0.35 * k, 0.015 + k * 0.02); }
         dust.done();
@@ -453,14 +495,29 @@ boot(async (info, D) => {
         cubes.setMatrixAt(k, m4);
       }
       cubes.instanceMatrix.needsUpdate = true;
+      if (ladang) {
+        // papan menghadap kamera pada sumbu tegak saja (tetap berdiri di lantai)
+        const yaw = Math.atan2(camera.position.x - OD, camera.position.z);
+        q4.setFromAxisAngle(V(0, 1, 0), yaw);
+        for (let k = 0; k < ld.length; k++) {
+          const c0 = ld[k], ap = clamp((fill - c0.k) * 9);
+          const sc = Math.max(1e-4, E.back(ap) * (1 - col) * (1 - sink * 0.5) * (0.85 + (c0.h - 0.23) * 0.5));
+          const x = lerp(c0.x, 0, col * col), z = lerp(c0.z, 0, col * col);
+          m4.compose(p4.set(x, (1 - E.o(ap)) * 1.2 + col * 1.4 + Math.sin(t * 1.6 + c0.d * 2) * 0.04, z), q4, s4.set(sc, sc, sc));
+          ladang.setMatrixAt(k, m4);
+        }
+        ladang.instanceMatrix.needsUpdate = true;
+      }
       const uIn = anggapS ? E.back(seg(t, anggapS.t + 0.2, anggapS.t + 0.65)) : 0;
       const uOut = anggapS ? 1 - seg(t, (rumusS ? rumusS.t : tCmp ?? tOut) - 0.3, (rumusS ? rumusS.t : tCmp ?? tOut) + 0.2) : 0;
       const us = Math.max(1e-4, Math.min(uIn, uOut));
-      unit.visible = us > 0.001; unitFrame.visible = unit.visible;
+      unit.visible = us > 0.001 && !unitI; unitFrame.visible = us > 0.001;
+      if (unitI) { unitI.visible = us > 0.001; unitI.scale.setScalar(us); unitI.position.set(0, 0.8 * us + 0.05, 5.2); }
       unit.scale.setScalar(us); unit.position.set(0, 0.5 * us + 0.02, 5.2); unit.rotation.y = 0.6 + t * 0.4;
       unitFrame.position.set(0, 0.03, 5.2); unitFrame.scale.setScalar(1.15 + 0.1 * Math.sin(t * 4)); unitFrame.material.opacity = us;
       const bs = rumusS ? E.back(seg(t, rumusS.t + 0.9, rumusS.t + 1.5)) : 0;
-      block.visible = bs > 0.001; block.scale.setScalar(Math.max(1e-4, bs)); block.position.set(0, 1.7 * bs + 0.05, 0); block.rotation.y = t * 0.25;
+      block.visible = bs > 0.001 && !blockI; block.scale.setScalar(Math.max(1e-4, bs)); block.position.set(0, 1.7 * bs + 0.05, 0); block.rotation.y = t * 0.25;
+      if (blockI) { blockI.visible = bs > 0.001; blockI.scale.setScalar(Math.max(1e-4, bs)); blockI.position.set(0, 2.4 * bs + 0.05 + Math.sin(t * 1.2) * 0.06, 0); }
       for (let i = 0; i < motes.n; i++) { const [x, h0, z, k] = moteSeed[i]; const y = (h0 + t * (0.08 + k * 0.1)) % 7; motes.set(i, x + Math.sin(t * 0.3 + k * 9) * 0.4, y, z, 0.55, 0.85, 1, 0.18 + 0.3 * k, 0.03 + k * 0.03); }
       motes.done();
     }
