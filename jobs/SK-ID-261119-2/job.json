@@ -1,0 +1,76 @@
+{
+ "template": "tebak-dulu",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #3 · KECEPATAN HEWAN",
+ "latar": "panggung",
+ "hook": [
+  "PEREGRINE FALCON",
+  "*MENUKIK SECEPAT?*",
+  "SAILFISH DI AIR?"
+ ],
+ "opsi": [
+  "334 KM/H",
+  "354 KM/H",
+  "335 KM/H"
+ ],
+ "benar": 0,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 389.0,
+   "satuan": "km/h",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "hitung",
+   "nilai": 55.0,
+   "satuan": "km/h",
+   "desimal": 0
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "389 - 55 = *334 km/h*",
+   "hasil": "334 km/h",
+   "sub": "SELISIH KECEPATAN"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "FALCON",
+    "nilai": 389.0,
+    "teks": "389 km/h",
+    "utama": true,
+    "ikon": null
+   },
+   {
+    "label": "CHEETAH",
+    "nilai": 104.0,
+    "teks": "104 km/h",
+    "ikon": null
+   },
+   {
+    "label": "SAILFISH",
+    "nilai": 55.0,
+    "teks": "55 km/h",
+    "ikon": null
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b7",
+  "kata": "Jawabannya",
+  "sub": "≈ 334 km/h"
+ },
+ "penutup": {
+  "baris": "b8",
+  "kata": "Tebakan",
+  "kata_follow": "follow"
+ }
+}

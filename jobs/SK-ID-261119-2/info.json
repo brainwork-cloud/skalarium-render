@@ -1,0 +1,50 @@
+[
+ {
+  "key": "b1",
+  "teks": "Peregrine falcon menukik, sailfish berenang, berapa selisih kecepatan maksimal keduanya?",
+  "dur": 4.943,
+  "sr": 48000
+ },
+ {
+  "key": "b2",
+  "teks": "Tebak dulu! A, 334 kilometer/h. B, 354 kilometer/h. Atau C, 335 kilometer/h. Pilih yang paling tepat.",
+  "dur": 10.373,
+  "sr": 48000
+ },
+ {
+  "key": "b3",
+  "teks": "Peregrine falcon tercatat menukik dengan kecepatan puncak mencapai 389 kilometer/h.",
+  "dur": 5.653,
+  "sr": 48000
+ },
+ {
+  "key": "b4",
+  "teks": "Penelitian terbaru menunjukkan sailfish dapat berenang hingga batas maksimum 55 kilometer/h.",
+  "dur": 4.818,
+  "sr": 48000
+ },
+ {
+  "key": "b5",
+  "teks": "Selisih keduanya: 389 dikurangi 55, hasilnya adalah 334 kilometer/h.",
+  "dur": 7.012,
+  "sr": 48000
+ },
+ {
+  "key": "b6",
+  "teks": "Lihat batang visual: falcon 389 kilometer/h, cheetah 104 kilometer/h, sailfish 55 kilometer/h.",
+  "dur": 7.984,
+  "sr": 48000
+ },
+ {
+  "key": "b7",
+  "teks": "Jawabannya A, 334 kilometer/h.",
+  "dur": 2.92,
+  "sr": 48000
+ },
+ {
+  "key": "b8",
+  "teks": "Tebakan berikutnya lebih gila. Jangan lupa follow Skalarium!",
+  "dur": 3.375,
+  "sr": 48000
+ }
+]
