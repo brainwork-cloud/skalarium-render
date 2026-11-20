@@ -1,0 +1,81 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #6 · PENANTIAN GTA 6",
+ "latar": "panggung",
+ "hook": [
+  "DARI GTA 5",
+  "*KE GTA 6*",
+  "BERAPA HARI?"
+ ],
+ "opsi": [
+  "2.400 HARI",
+  "4.811 HARI",
+  "7.300 HARI"
+ ],
+ "benar": 1,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 13.0,
+   "satuan": "TAHUN MENUNGGU",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "fakta",
+   "teks": "GTA 5: *17 SEP 2013* · GTA 6: *19 NOV 2026*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "4.748 + 63 = *4.811 hari*",
+   "hasil": "4.811 hari",
+   "sub": "TERMASUK 3 TAHUN KABISAT"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "GTA 5 → GTA 6",
+    "nilai": 4811.0,
+    "teks": "4.811 hari",
+    "utama": true,
+    "benda": "video game",
+    "benda_umum": "joystick",
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "GTA 4 → GTA 5",
+    "nilai": 1967.0,
+    "teks": "1.967 hari",
+    "benda": "joystick",
+    "benda_umum": "video game",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "SA → GTA 4",
+    "nilai": 1281.0,
+    "teks": "1.281 hari",
+    "benda": "television",
+    "benda_umum": "video game",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "± 2,4× penantian GTA 4 → 5"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakan",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
