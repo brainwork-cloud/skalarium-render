@@ -244,7 +244,9 @@ boot(async (info, D) => {
   // ================================================================ overlay teks (sama dengan versi 3D)
   const dim = el('', 'dim');
   const topfade = el('', 'topfade');
-  const pill = el(`<span class="dot"></span>${esc(D.seri || 'TEBAK DULU')}`, 'pill');
+  // label seri: huruf mengecil untuk judul panjang supaya tidak menabrak logo SKALARIUM di kanan (20 Nov)
+  const seriT = String(D.seri || 'TEBAK DULU');
+  const pill = el(`<span class="dot"></span>${esc(seriT)}`, 'pill', { fontSize: `${Math.round(clamp((500 / seriT.length - 2.5) / 0.68, 18, 28))}px`, letterSpacing: seriT.length > 24 ? '1.5px' : '2.5px' });
   const brand = el('<i></i>SKALARIUM', 'brand');
   const hookLines = Array.isArray(D.hook) ? D.hook : String(D.hook || '').split('|');
   const hookLen = Math.max(...hookLines.map(s => String(s).replace(/\*/g, '').length), 8);
