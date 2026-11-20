@@ -1,0 +1,81 @@
+{
+ "template": "tebak-dulu",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #4 · KATA TERPANJANG",
+ "latar": "panggung",
+ "hook": [
+  "KATA TERPANJANG",
+  "*PALING PANJANG*",
+  "BERAPA HURUF?"
+ ],
+ "opsi": [
+  "16 HURUF",
+  "45 HURUF",
+  "71 KARAKTER"
+ ],
+ "benar": 2,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 16.0,
+   "satuan": "HURUF · BAHASA ARAB",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "fakta",
+   "teks": "Bahasa Inggris punya kata medis dengan *45 HURUF*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "hitung",
+   "nilai": 71.0,
+   "satuan": "KARAKTER · MILITER FINLANDIA",
+   "desimal": 0
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "FINLANDIA",
+    "nilai": 71.0,
+    "teks": "71 karakter",
+    "utama": true,
+    "benda": "book",
+    "benda_umum": "paper",
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "INGGRIS",
+    "nilai": 45.0,
+    "teks": "45 huruf",
+    "benda": "newspaper",
+    "benda_umum": "paper",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "ARAB",
+    "nilai": 16.0,
+    "teks": "16 huruf",
+    "benda": "envelope",
+    "benda_umum": "paper",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "71 karakter (istilah militer Finlandia)"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakan",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
