@@ -1,0 +1,81 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #5 · TRAILER GTA 6",
+ "latar": "panggung",
+ "hook": [
+  "PENONTON GTA 6",
+  "*BERJAJAR RAPI*",
+  "SEPANJANG APA?"
+ ],
+ "opsi": [
+  "2.375 KM",
+  "23.750 KM",
+  "237.500 KM"
+ ],
+ "benar": 2,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 475000000.0,
+   "satuan": "VIEWS TRAILER 2 · 24 JAM",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "anggap",
+   "teks": "1 ORANG = *50 CM*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "475 juta × 0,5 m = *237.500 km*",
+   "hasil": "237.500 km",
+   "sub": "PANJANG BARISAN PENONTON"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "BARISAN",
+    "nilai": 237500.0,
+    "teks": "237.500 km",
+    "utama": true,
+    "benda": "people",
+    "benda_umum": "person",
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "KELILING BUMI",
+    "nilai": 40075.0,
+    "teks": "40.075 km",
+    "benda": "globe",
+    "benda_umum": "earth",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "KE BULAN",
+    "nilai": 384400.0,
+    "teks": "384.400 km",
+    "benda": "full moon",
+    "benda_umum": "moon",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "± 6× keliling bumi"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakan",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
