@@ -1,11 +1,13 @@
 name: render
+# Render paralel (20 Nov 2026): tiap video dipotong per 30 frame, potongan dibagi ke beberapa runner (3D 8 shard, 2.5D 2 shard),
+# lalu digabung + audio + sampul dan diunggah sebagai rilis render-<ID>. Repo publik: menit Actions gratis.
 on:
   push:
     paths: ["jobs/**/job.json"]
   workflow_dispatch:
     inputs:
       id:
-        description: "ID job yang dirender ulang (kosong = semua job yang belum punya rilis)"
+        description: "ID job yang dirender ulang (kosong = semua job yang belum punya rilis; boleh beberapa, pisahkan koma)"
         required: false
 permissions:
   contents: write
@@ -13,9 +15,33 @@ concurrency:
   group: render
   cancel-in-progress: false
 jobs:
-  render:
-    runs-on: ubuntu-24.04   # Playwright 1.56 belum mendukung ubuntu 26.04 (ubuntu-latest sejak 19 Okt 2026)
-    timeout-minutes: 90
+  daftar:
+    runs-on: ubuntu-24.04
+    outputs:
+      ids: ${{ steps.d.outputs.ids }}
+      potong: ${{ steps.d.outputs.potong }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: d
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ID: ${{ inputs.id }}
+        run: |
+          j=$(bash kerja/jalan.sh daftar)
+          echo "$j"
+          echo "ids=$(echo "$j" | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["ids"]))')" >> "$GITHUB_OUTPUT"
+          echo "potong=$(echo "$j" | python3 -c 'import json,sys;print(json.dumps(json.load(sys.stdin)["potong"]))')" >> "$GITHUB_OUTPUT"
+
+  potong:
+    needs: daftar
+    if: needs.daftar.outputs.ids != '[]'
+    runs-on: ubuntu-24.04   # Playwright 1.56 belum mendukung ubuntu 26.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 18
+      matrix:
+        include: ${{ fromJSON(needs.daftar.outputs.potong) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,9 +52,44 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - run: pip install --quiet numpy scipy
-      - name: Render job baru
+      - name: Render potongan ${{ matrix.k }} dari ${{ matrix.n }}
+        env:
+          WORKERS: "3"
+        run: bash kerja/jalan.sh potong "${{ matrix.id }}" "${{ matrix.k }}" "${{ matrix.n }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: potong-${{ matrix.id }}-${{ matrix.k }}
+          path: out/${{ matrix.id }}/seg_*.mp4
+          retention-days: 2
+          if-no-files-found: error
+
+  gabung:
+    needs: [daftar, potong]
+    if: always() && needs.daftar.outputs.ids != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        id: ${{ fromJSON(needs.daftar.outputs.ids) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install --quiet numpy scipy
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          pattern: potong-${{ matrix.id }}-*
+          path: out/${{ matrix.id }}
+          merge-multiple: true
+      - name: Gabung + unggah rilis
         env:
           GH_TOKEN: ${{ github.token }}
           WORKERS: "3"
-          ID: ${{ inputs.id }}
-        run: bash kerja/jalan.sh
+        run: bash kerja/jalan.sh gabung "${{ matrix.id }}"
