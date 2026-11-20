@@ -11,8 +11,9 @@ shopt -s nullglob
 
 tpl_of() { python3 -c "import json,sys;print(json.load(open(sys.argv[1]))['template'])" "jobs/$1/job.json"; }
 mood_of() { python3 -c "import json,sys;print(json.load(open(sys.argv[1])).get('mood','misteri'))" "jobs/$1/job.json"; }
-# jumlah shard per template: 3D berat (±0,13-0,37 frame/dtk per browser), 2.5D ringan (±3 frame/dtk)
-shard_of() { case "$(tpl_of "$1")" in tebak-25d) echo "${SHARD_25D:-2}" ;; *) echo "${SHARD_3D:-8}" ;; esac; }
+# jumlah shard per template: 3D berat (±0,13-0,37 frame/dtk per browser); 2.5D di runner Actions ternyata
+# ±1 frame/dtk per shard (20 Nov: 2 shard = 15-25 menit), jadi 6 shard. Repo publik: menit gratis, maks 20 job serentak.
+shard_of() { case "$(tpl_of "$1")" in tebak-25d) echo "${SHARD_25D:-6}" ;; *) echo "${SHARD_3D:-8}" ;; esac; }
 
 perlu() {  # daftar ID yang perlu dirender
   for jf in jobs/*/job.json; do
