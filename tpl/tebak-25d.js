@@ -51,6 +51,7 @@ const CSS = `
 .grain { left: -64px; top: -64px; width: 1208px; height: 2048px; opacity: .06; }
 .fl { left: 0; top: 0; width: 1080px; height: 1920px; background: #fff; }
 .fade { left: 0; top: 0; width: 1080px; height: 1920px; background: #000; }
+#w25 img.gelap { filter: brightness(2.4) drop-shadow(0 0 14px rgba(160,190,255,.65)) drop-shadow(0 24px 30px rgba(0,0,0,.5)) !important; }
 `;
 
 boot(async (info, D) => {
@@ -240,6 +241,16 @@ boot(async (info, D) => {
   const flash = mk(world, 'fl');
   const fade = mk(world, 'fade');
   await Promise.all(imgs.map(i => i.decode().catch(() => { i.style.display = 'none'; })));
+  // ikon gelap (mis. siluet orang) dibuat lebih terang + cahaya tepi supaya terlihat di latar gelap (20 Nov)
+  const terang = new Map();
+  const cekTerang = im => {
+    if (terang.has(im.src)) return terang.get(im.src);
+    const c = document.createElement('canvas'); c.width = c.height = 32; const g = c.getContext('2d'); g.drawImage(im, 0, 0, 32, 32);
+    const d = g.getImageData(0, 0, 32, 32).data; let s = 0, n = 0;
+    for (let k = 0; k < d.length; k += 4) if (d[k + 3] > 128) { s += 0.2126 * d[k] + 0.7152 * d[k + 1] + 0.0722 * d[k + 2]; n++; }
+    const v = n ? s / n / 255 : 1; terang.set(im.src, v); return v;
+  };
+  for (const im of imgs) if (im.style.display !== 'none' && cekTerang(im) < 0.3) im.classList.add('gelap');
 
   // ================================================================ overlay teks (sama dengan versi 3D)
   const dim = el('', 'dim');
@@ -426,7 +437,9 @@ boot(async (info, D) => {
       const uOut = anggapS ? 1 - seg(t, sinkEnd - 0.1, sinkEnd + 0.4) : 0;
       const us = Math.max(0.0001, Math.min(uIn, uOut));
       unit.style.visibility = us > 0.001 ? 'visible' : 'hidden';
-      unit.style.transform = `translate3d(700px, ${f1(700 + 380)}px, 0)`;
+      // satuan selalu di depan kamera: posisinya diputar balik sebesar putaran lantai
+      const rr = rz * Math.PI / 180;
+      unit.style.transform = `translate3d(${f1(700 + 380 * Math.sin(rr))}px, ${f1(700 + 380 * Math.cos(rr))}px, 0)`;
       uframe.style.transform = `scale(${f3(us * (1.1 + 0.06 * Math.sin(t * 4)))}) rotate(45deg)`;
       unitIc.style.transform = `${uprt} translateY(${f1(-30 * us + Math.sin(t * 2) * 6)}px) scale(${f3(us)})`;
       // hasil rumus: benda besar + sinar
