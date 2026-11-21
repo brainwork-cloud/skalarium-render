@@ -1,0 +1,83 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #7 · REKOR PI",
+ "latar": "panggung",
+ "hook": [
+  "REKOR PI KUNO",
+  "*BERAPA DIGIT*",
+  "YANG DITEMUKAN?"
+ ],
+ "opsi": [
+  "7 DIGIT DESIMAL",
+  "16 DIGIT DESIMAL",
+  "35 DIGIT DESIMAL"
+ ],
+ "benar": 1,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "fakta",
+   "teks": "Pecahan 22 per 7 hanya akurat sampai *2 ANGKA DESIMAL*"
+  },
+  {
+   "baris": "b4",
+   "jenis": "hitung",
+   "nilai": 1424.0,
+   "satuan": "TAHUN REKOR AL-KASHI",
+   "desimal": 0
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "9 digit seksagesimal = *16 DIGIT DESIMAL*",
+   "hasil": "16 DIGIT",
+   "sub": "REKOR TAHUN 1424"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "22 PER 7",
+    "nilai": 2.0,
+    "teks": "2 digit",
+    "utama": false,
+    "benda": "circle",
+    "benda_umum": "shape",
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "AL-KASHI",
+    "nilai": 16.0,
+    "teks": "16 digit",
+    "utama": true,
+    "benda": "circle",
+    "benda_umum": "shape",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "VAN CEULEN",
+    "nilai": 35.0,
+    "teks": "35 digit",
+    "utama": false,
+    "benda": "circle",
+    "benda_umum": "shape",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "≈ 16 digit desimal (tahun 1424)"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakan",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
