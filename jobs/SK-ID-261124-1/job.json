@@ -1,0 +1,79 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #8 · JARAK",
+ "latar": "panggung",
+ "hook": [
+  "BLUETOOTH VS WIFI",
+  "*KENAPA JARAKNYA*",
+  "BERBEDA?"
+ ],
+ "opsi": [
+  "DUA KALI",
+  "LIMA KALI",
+  "LIMA BELAS KALI"
+ ],
+ "benar": 2,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 10.0,
+   "satuan": "meter",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "hitung",
+   "nilai": 150.0,
+   "satuan": "meter",
+   "desimal": 0
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "150 ÷ 10 = *15*",
+   "hasil": "15 kali",
+   "sub": "RASIO JARAK"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "bola",
+  "item": [
+   {
+    "label": "BLUETOOTH",
+    "nilai": 10.0,
+    "teks": "10 m",
+    "utama": false,
+    "ikon": null
+   },
+   {
+    "label": "WIFI INDOOR",
+    "nilai": 20.0,
+    "teks": "20 m",
+    "utama": false,
+    "ikon": null
+   },
+   {
+    "label": "WIFI OUTDOOR",
+    "nilai": 150.0,
+    "teks": "150 m",
+    "utama": true,
+    "ikon": null
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "≈ 15 kali"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakan",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
