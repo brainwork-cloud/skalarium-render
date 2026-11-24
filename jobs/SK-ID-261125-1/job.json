@@ -1,0 +1,81 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #9 · TUMPUKAN GTA 5",
+ "latar": "panggung",
+ "hook": [
+  "SEMUA GTA 5",
+  "*DITUMPUK*",
+  "SETINGGI APA?"
+ ],
+ "opsi": [
+  "32 KM",
+  "322 KM",
+  "3.220 KM"
+ ],
+ "benar": 2,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 230000000.0,
+   "satuan": "KOPI GTA 5 TERJUAL",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "anggap",
+   "teks": "1 KOTAK GAME = *1,4 CM*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "230 juta × 1,4 cm = *3.220 km*",
+   "hasil": "3.220 km",
+   "sub": "TINGGI TUMPUKAN"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "TUMPUKAN GTA 5",
+    "nilai": 3220.0,
+    "teks": "3.220 km",
+    "benda": "optical disk",
+    "benda_umum": "dvd",
+    "utama": true,
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "ORBIT ISS",
+    "nilai": 400.0,
+    "teks": "400 km",
+    "benda": "satellite",
+    "benda_umum": "rocket",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "BATAS ANGKASA",
+    "nilai": 100.0,
+    "teks": "100 km",
+    "benda": "rocket",
+    "benda_umum": "satellite",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "± 8× ketinggian orbit ISS"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakanmu",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
