@@ -1,0 +1,81 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "en",
+ "mood": "misteri",
+ "seri": "GUESS FIRST #1 · GTA 5 STACK",
+ "latar": "panggung",
+ "hook": [
+  "EVERY GTA 5 COPY",
+  "*STACKED UP*",
+  "HOW TALL?"
+ ],
+ "opsi": [
+  "32 KM",
+  "322 KM",
+  "3,220 KM"
+ ],
+ "benar": 2,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 230000000.0,
+   "satuan": "GTA 5 COPIES SOLD",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "anggap",
+   "teks": "1 GAME CASE = *1.4 CM*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "230 million × 1.4 cm = *3,220 km*",
+   "hasil": "3,220 km",
+   "sub": "HEIGHT OF THE STACK"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "GTA 5 STACK",
+    "nilai": 3220.0,
+    "teks": "3,220 km",
+    "benda": "optical disk",
+    "benda_umum": "dvd",
+    "utama": true,
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "ISS ORBIT",
+    "nilai": 400.0,
+    "teks": "400 km",
+    "benda": "satellite",
+    "benda_umum": "rocket",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "EDGE OF SPACE",
+    "nilai": 100.0,
+    "teks": "100 km",
+    "benda": "rocket",
+    "benda_umum": "satellite",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "answer",
+  "sub": "± 8× the height of the ISS"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Did",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
