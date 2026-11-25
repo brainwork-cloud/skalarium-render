@@ -1,0 +1,44 @@
+[
+ {
+  "key": "b1",
+  "teks": "If you stacked a billion dollars in hundred-dollar bills, how tall would the pile be?",
+  "dur": 4.59,
+  "sr": 48000
+ },
+ {
+  "key": "b2",
+  "teks": "Guess first! A, 11 meters. B, 110 meters. Or C, 1,100 meters.",
+  "dur": 7.78,
+  "sr": 48000
+ },
+ {
+  "key": "b3",
+  "teks": "A billion dollars in hundred-dollar bills is 10 million bills.",
+  "dur": 4.41,
+  "sr": 48000
+ },
+ {
+  "key": "b4",
+  "teks": "Assume each bill is 0.11 millimeters thick.",
+  "dur": 2.55,
+  "sr": 48000
+ },
+ {
+  "key": "b5",
+  "teks": "So 10 million times 0.11 millimeters gives 1,100 meters.",
+  "dur": 5.25,
+  "sr": 48000
+ },
+ {
+  "key": "b6",
+  "teks": "The Burj Khalifa, the tallest building on Earth, is only 828 meters. The answer is C, a stack of cash taller than the Burj Khalifa!",
+  "dur": 8.58,
+  "sr": 48000
+ },
+ {
+  "key": "b7",
+  "teks": "Did you guess right? Tell us in the comments, and follow Skalarium!",
+  "dur": 3.8,
+  "sr": 48000
+ }
+]

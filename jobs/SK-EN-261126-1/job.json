@@ -1,0 +1,81 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "en",
+ "mood": "ceria",
+ "seri": "GUESS FIRST #2 · ONE BILLION DOLLAR",
+ "latar": "panggung",
+ "hook": [
+  "ONE BILLION DOLLARS",
+  "*STACKED UP*",
+  "HOW TALL?"
+ ],
+ "opsi": [
+  "11 METERS",
+  "110 METERS",
+  "1,100 METERS"
+ ],
+ "benar": 2,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 10000000.0,
+   "satuan": "HUNDRED-DOLLAR BILLS",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "anggap",
+   "teks": "1 BILL = *0.11 MM*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "10 million × 0.11 mm = *1,100 meters*",
+   "hasil": "1,100 m",
+   "sub": "HEIGHT OF THE STACK"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "$1 BILLION",
+    "nilai": 1100.0,
+    "teks": "1,100 m",
+    "benda": "dollar banknote",
+    "benda_umum": "money",
+    "utama": true,
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "BURJ KHALIFA",
+    "nilai": 828.0,
+    "teks": "828 m",
+    "benda": "office building",
+    "benda_umum": "building",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "EIFFEL TOWER",
+    "nilai": 330.0,
+    "teks": "330 m",
+    "benda": "tokyo tower",
+    "benda_umum": "building",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "answer",
+  "sub": "taller than the Burj Khalifa"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Did",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
