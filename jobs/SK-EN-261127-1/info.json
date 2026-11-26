@@ -1,0 +1,44 @@
+[
+ {
+  "key": "b1",
+  "teks": "If you counted one number every second without stopping, how long until you reach one billion?",
+  "dur": 5.99,
+  "sr": 48000
+ },
+ {
+  "key": "b2",
+  "teks": "Guess first! A, 1 year. B, 12 years. Or C, 31 years.",
+  "dur": 5.7,
+  "sr": 48000
+ },
+ {
+  "key": "b3",
+  "teks": "One number per second means you need 1 billion seconds.",
+  "dur": 3.66,
+  "sr": 48000
+ },
+ {
+  "key": "b4",
+  "teks": "A day has only 86,400 seconds.",
+  "dur": 3.05,
+  "sr": 48000
+ },
+ {
+  "key": "b5",
+  "teks": "So 1 billion divided by 86,400 gives 11,574 days, or about 31 years.",
+  "dur": 8.1,
+  "sr": 48000
+ },
+ {
+  "key": "b6",
+  "teks": "Counting to a million takes just 11.6 days. The answer is C, about 31 years without sleep!",
+  "dur": 7.6,
+  "sr": 48000
+ },
+ {
+  "key": "b7",
+  "teks": "Did you guess right? Tell us in the comments, and follow Skalarium!",
+  "dur": 3.96,
+  "sr": 48000
+ }
+]

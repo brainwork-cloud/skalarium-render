@@ -1,0 +1,73 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "en",
+ "mood": "misteri",
+ "seri": "GUESS FIRST #3 · COUNT TO A BILLION",
+ "latar": "panggung",
+ "hook": [
+  "COUNT TO",
+  "*ONE BILLION*",
+  "HOW LONG?"
+ ],
+ "opsi": [
+  "1 YEAR",
+  "12 YEARS",
+  "31 YEARS"
+ ],
+ "benar": 2,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 1000000000.0,
+   "satuan": "SECONDS · 1 NUMBER PER SECOND",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "fakta",
+   "teks": "1 DAY = *86,400 SECONDS*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "1 billion ÷ 86,400 = *11,574 days*",
+   "hasil": "± 31 years",
+   "sub": "NO SLEEP, NO BREAKS"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "1 BILLION",
+    "nilai": 11574.0,
+    "teks": "11,574 days",
+    "benda": "stopwatch",
+    "benda_umum": "hourglass",
+    "utama": true,
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "1 MILLION",
+    "nilai": 11.6,
+    "teks": "11.6 days",
+    "benda": "hourglass",
+    "benda_umum": "stopwatch",
+    "ikon": "ikon_1.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "answer",
+  "sub": "a million takes only 11.6 days"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Did",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
