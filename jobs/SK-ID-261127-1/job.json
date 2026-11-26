@@ -1,0 +1,73 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #11 · HITUNG 1 MILIAR",
+ "latar": "panggung",
+ "hook": [
+  "HITUNG SAMPAI",
+  "*1 MILIAR*",
+  "BERAPA LAMA?"
+ ],
+ "opsi": [
+  "1 TAHUN",
+  "12 TAHUN",
+  "31 TAHUN"
+ ],
+ "benar": 2,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 1000000000.0,
+   "satuan": "DETIK · 1 ANGKA PER DETIK",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "fakta",
+   "teks": "1 HARI = *86.400 DETIK*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "1 miliar ÷ 86.400 = *11.574 hari*",
+   "hasil": "± 31 tahun",
+   "sub": "TANPA TIDUR, TANPA MAKAN"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "1 MILIAR",
+    "nilai": 11574.0,
+    "teks": "11.574 hari",
+    "benda": "stopwatch",
+    "benda_umum": "hourglass",
+    "utama": true,
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "1 JUTA",
+    "nilai": 11.6,
+    "teks": "11,6 hari",
+    "benda": "hourglass",
+    "benda_umum": "stopwatch",
+    "ikon": "ikon_1.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "1 juta cuma butuh 11,6 hari"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakanmu",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}

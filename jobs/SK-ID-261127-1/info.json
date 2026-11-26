@@ -1,0 +1,44 @@
+[
+ {
+  "key": "b1",
+  "teks": "Kalau kamu menghitung satu angka per detik tanpa berhenti, berapa lama sampai 1 miliar?",
+  "dur": 5.77,
+  "sr": 48000
+ },
+ {
+  "key": "b2",
+  "teks": "Tebak dulu! A, 1 tahun. B, 12 tahun. Atau C, 31 tahun.",
+  "dur": 5.69,
+  "sr": 48000
+ },
+ {
+  "key": "b3",
+  "teks": "Satu angka per detik berarti butuh 1 miliar detik.",
+  "dur": 4.06,
+  "sr": 48000
+ },
+ {
+  "key": "b4",
+  "teks": "Sehari itu cuma 86.400 detik.",
+  "dur": 3.11,
+  "sr": 48000
+ },
+ {
+  "key": "b5",
+  "teks": "Jadi 1 miliar dibagi 86.400, hasilnya 11.574 hari, atau sekitar 31 tahun.",
+  "dur": 8.35,
+  "sr": 48000
+ },
+ {
+  "key": "b6",
+  "teks": "Padahal menghitung sampai 1 juta cuma butuh 11,6 hari. Jawabannya C, sekitar 31 tahun tanpa tidur!",
+  "dur": 9.33,
+  "sr": 48000
+ },
+ {
+  "key": "b7",
+  "teks": "Tebakanmu benar? Tulis di komentar, dan follow Skalarium!",
+  "dur": 3.98,
+  "sr": 48000
+ }
+]
