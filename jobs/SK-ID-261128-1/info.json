@@ -1,0 +1,44 @@
+[
+ {
+  "key": "b1",
+  "teks": "Kalau ada jalan lurus ke Bulan dan kamu jalan kaki tanpa berhenti, berapa lama sampainya?",
+  "dur": 5.631,
+  "sr": 48000
+ },
+ {
+  "key": "b2",
+  "teks": "Tebak dulu! A, 9 bulan. B, 9 tahun. Atau C, 90 tahun.",
+  "dur": 6.089,
+  "sr": 48000
+ },
+ {
+  "key": "b3",
+  "teks": "Jarak rata-rata Bumi ke Bulan itu 384.400 kilometer.",
+  "dur": 4.752,
+  "sr": 48000
+ },
+ {
+  "key": "b4",
+  "teks": "Anggap saja kamu jalan kaki dengan kecepatan 5 kilometer per jam, tanpa tidur.",
+  "dur": 5.428,
+  "sr": 48000
+ },
+ {
+  "key": "b5",
+  "teks": "Jadi 384.400 dibagi 5, hasilnya 76.880 jam, atau 3.203 hari.",
+  "dur": 10.03,
+  "sr": 48000
+ },
+ {
+  "key": "b6",
+  "teks": "Naik mobil 100 kilometer per jam saja butuh 160 hari. Jawabannya B, hampir 9 tahun jalan kaki!",
+  "dur": 7.45,
+  "sr": 48000
+ },
+ {
+  "key": "b7",
+  "teks": "Tebakanmu benar? Tulis di komentar, dan follow Skalarium!",
+  "dur": 3.69,
+  "sr": 48000
+ }
+]

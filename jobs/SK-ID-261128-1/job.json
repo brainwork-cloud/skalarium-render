@@ -1,0 +1,81 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "id",
+ "mood": "misteri",
+ "seri": "TEBAK DULU #12 · JALAN KE BULAN",
+ "latar": "panggung",
+ "hook": [
+  "JALAN KAKI",
+  "*KE BULAN*",
+  "BERAPA LAMA?"
+ ],
+ "opsi": [
+  "9 BULAN",
+  "9 TAHUN",
+  "90 TAHUN"
+ ],
+ "benar": 1,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 384400.0,
+   "satuan": "KM · JARAK BUMI KE BULAN",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "anggap",
+   "teks": "JALAN KAKI = *5 KM/JAM*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "384.400 ÷ 5 = *76.880 jam*",
+   "hasil": "3.203 hari",
+   "sub": "± 9 TAHUN TANPA BERHENTI"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "JALAN KAKI",
+    "nilai": 3203.0,
+    "teks": "3.203 hari",
+    "benda": "person walking",
+    "benda_umum": "person",
+    "utama": true,
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "NAIK MOBIL",
+    "nilai": 160.0,
+    "teks": "160 hari",
+    "benda": "automobile",
+    "benda_umum": "car",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "NAIK PESAWAT",
+    "nilai": 18.0,
+    "teks": "18 hari",
+    "benda": "airplane",
+    "benda_umum": "plane",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "Jawabannya",
+  "sub": "naik mobil pun butuh 160 hari"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Tebakanmu",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}
