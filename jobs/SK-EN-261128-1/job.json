@@ -1,0 +1,81 @@
+{
+ "template": "tebak-25d",
+ "bahasa": "en",
+ "mood": "misteri",
+ "seri": "GUESS FIRST #4 · WALK TO THE MOON",
+ "latar": "panggung",
+ "hook": [
+  "WALK",
+  "*TO THE MOON*",
+  "HOW LONG?"
+ ],
+ "opsi": [
+  "9 MONTHS",
+  "9 YEARS",
+  "90 YEARS"
+ ],
+ "benar": 1,
+ "langkah": [
+  {
+   "baris": "b3",
+   "jenis": "hitung",
+   "nilai": 384400.0,
+   "satuan": "KM · EARTH TO THE MOON",
+   "desimal": 0
+  },
+  {
+   "baris": "b4",
+   "jenis": "anggap",
+   "teks": "WALKING = *5 KM/H*"
+  },
+  {
+   "baris": "b5",
+   "jenis": "rumus",
+   "teks": "384,400 ÷ 5 = *76,880 hours*",
+   "hasil": "3,203 days",
+   "sub": "± 9 YEARS, NONSTOP"
+  }
+ ],
+ "banding": {
+  "baris": "b6",
+  "jenis": "batang",
+  "item": [
+   {
+    "label": "WALKING",
+    "nilai": 3203.0,
+    "teks": "3,203 days",
+    "benda": "person walking",
+    "benda_umum": "person",
+    "utama": true,
+    "ikon": "ikon_0.png"
+   },
+   {
+    "label": "BY CAR",
+    "nilai": 160.0,
+    "teks": "160 days",
+    "benda": "automobile",
+    "benda_umum": "car",
+    "ikon": "ikon_1.png"
+   },
+   {
+    "label": "BY JET",
+    "nilai": 18.0,
+    "teks": "18 days",
+    "benda": "airplane",
+    "benda_umum": "plane",
+    "ikon": "ikon_2.png"
+   }
+  ]
+ },
+ "jawaban": {
+  "baris": "b6",
+  "kata": "answer",
+  "sub": "even a car needs 160 days"
+ },
+ "penutup": {
+  "baris": "b7",
+  "kata": "Did",
+  "kata_follow": "follow"
+ },
+ "subjek": "subjek.png"
+}

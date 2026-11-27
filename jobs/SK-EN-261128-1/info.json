@@ -1,0 +1,44 @@
+[
+ {
+  "key": "b1",
+  "teks": "If there was a straight road to the Moon and you walked nonstop, how long would it take?",
+  "dur": 4.65,
+  "sr": 48000
+ },
+ {
+  "key": "b2",
+  "teks": "Guess first! A, 9 months. B, 9 years. Or C, 90 years.",
+  "dur": 6.06,
+  "sr": 48000
+ },
+ {
+  "key": "b3",
+  "teks": "The average distance from Earth to the Moon is 384,400 kilometers.",
+  "dur": 5.42,
+  "sr": 48000
+ },
+ {
+  "key": "b4",
+  "teks": "Assume you walk at 5 kilometers per hour and never sleep.",
+  "dur": 3.2,
+  "sr": 48000
+ },
+ {
+  "key": "b5",
+  "teks": "So 384,400 divided by 5 gives 76,880 hours, or 3,203 days.",
+  "dur": 8.17,
+  "sr": 48000
+ },
+ {
+  "key": "b6",
+  "teks": "Even a car at 100 kilometers per hour needs 160 days. The answer is B, almost 9 years of walking!",
+  "dur": 8.3,
+  "sr": 48000
+ },
+ {
+  "key": "b7",
+  "teks": "Did you guess right? Tell us in the comments, and follow Skalarium!",
+  "dur": 3.77,
+  "sr": 48000
+ }
+]
